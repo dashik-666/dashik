@@ -1,0 +1,30 @@
+# Render Blueprint —— 乐乐电竞后端 API
+# 用 GitHub 仓库导入 Render 后可一键部署；订阅 Blueprint 后自动读取本文件。
+# 数据库使用 TiDB Cloud Serverless（MySQL 兼容），连接信息在 Render 环境变量中配置。
+services:
+  - type: web
+    name: lele-backend
+    runtime: docker
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: ./backend
+    plan: free
+    healthCheckPath: /health
+    envVars:
+      - key: PORT
+        value: 10000
+      - key: NODE_ENV
+        value: production
+      - key: DB_HOST
+        sync: false        # 在 Render Dashboard 填入 TiDB Host
+      - key: DB_PORT
+        value: "4000"
+      - key: DB_NAME
+        value: payboard
+      - key: DB_USER
+        sync: false        # 填入 TiDB User
+      - key: DB_PASSWORD
+        sync: false        # 填入 TiDB Password
+      - key: JWT_SECRET
+        generateValue: true
+      - key: CORS_ORIGIN
+        sync: false        # 填入前端站点地址（如 https://xxx.pages.dev）
