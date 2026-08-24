@@ -1,8 +1,8 @@
 # ---- build storefront (玩家端前端) ----
 FROM node:20-alpine AS storefront
 WORKDIR /app
-RUN npm install -g pnpm@9
-COPY storefront/package.json storefront/pnpm-lock.yaml ./
+RUN npm install -g pnpm@11
+COPY storefront/package.json storefront/pnpm-lock.yaml storefront/pnpm-workspace.yaml ./
 RUN pnpm install
 COPY storefront/ ./
 ENV VITE_API_BASE=/api/v1/store
