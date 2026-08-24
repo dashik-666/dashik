@@ -1,6 +1,8 @@
 import 'dotenv/config';
 import 'reflect-metadata';
 import express from 'express';
+import path from 'path';
+import fs from 'fs';
 import cors from 'cors';
 import helmet from 'helmet';
 import dotenv from 'dotenv';
@@ -140,6 +142,17 @@ app.use('/api/v1/logs', logRoutes);
 app.use('/api/v1/commission-rules', commissionRuleRoutes);
 app.use('/api/v1/worker-settlements', workerSettlementRoutes);
 app.use('/api/v1/store', storefrontRoutes);
+
+// ---------- 托管玩家端前端（storefront 静态构建） ----------
+const storefrontDir = path.join(process.cwd(), 'storefront');
+if (fs.existsSync(storefrontDir)) {
+  app.use(express.static(storefrontDir));
+  // SPA 回退：非 /api 的 GET 请求都返回 index.html
+  app.get(/^\/(?!api\/).*/, (req, res) => {
+    res.sendFile(path.join(storefrontDir, 'index.html'));
+  });
+  console.log('🖥️ 已托管玩家端前端目录:', storefrontDir);
+}
 
 // 404处理
 app.use('*', (req, res) => {
