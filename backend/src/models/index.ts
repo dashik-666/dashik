@@ -38,7 +38,9 @@ const sequelize = new Sequelize({
     dateStrings: true,
     typeCast: true,
     // 设置 MySQL 模式
-    sql_mode: 'ALLOW_INVALID_DATES'
+    sql_mode: 'ALLOW_INVALID_DATES',
+    // TiDB / 云端 MySQL 需要 TLS 时开启
+    ...(process.env.DB_SSL === 'true' ? { ssl: { rejectUnauthorized: false } } : {})
   },
   define: {
     timestamps: true,
