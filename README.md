@@ -1,88 +1,112 @@
-# 馃幃 涔愪箰鐢电珵 路 涓夎娲查櫔鐜╂帴鍗曞钩鍙?
-> 涓€涓潰鍚戙€婁笁瑙掓床琛屽姩銆嬫父鎴忕殑闄帺鎺ュ崟骞冲彴锛?*鐜╁绔笅鍗曞墠鍙?* + **宸ヤ綔瀹ょ鐞嗗悗鍙?*銆?> 鍩轰簬 [Guyungy/Kuangniao](https://github.com/Guyungy/Kuangniao)锛圡IT锛変簩娆″紑鍙戯紝鍝佺墝鏀归€犱负銆屼箰涔愮數绔炪€嶃€?
-| 鎶€鏈爤 | 馃敡 |
+# 🎮 乐乐电竞 · 三角洲陪玩接单平台
+
+> 一个面向《三角洲行动》游戏的陪玩接单平台：**玩家端下单前台** + **工作室管理后台**。
+> 基于 [Guyungy/Kuangniao](https://github.com/Guyungy/Kuangniao)（MIT）二次开发，品牌改造为「乐乐电竞」。
+
+| 技术栈 | 🔧 |
 | --- | --- |
-| 鐜╁绔墠鍙?| Vue 3 + Vite + TypeScript + Element Plus + Pinia + Vue Router |
-| 绠＄悊鍚庡彴 | Vue 3 + Vite + TypeScript + Element Plus + ECharts |
-| 鍚庣 API | Node.js + TypeScript + Express + sequelize-typescript |
-| 鏁版嵁搴?| MySQL 8锛坲tf8mb4锛?|
-| 璁よ瘉 | JWT锛堢鐞嗗憳 / 鐜╁鍙屼綋绯伙級 |
-| 閮ㄧ讲 | Docker Compose锛涘墠绔彲鍙戝竷涓洪潤鎬佺珯鐐?|
+| 玩家端前台 | Vue 3 + Vite + TypeScript + Element Plus + Pinia + Vue Router |
+| 管理后台 | Vue 3 + Vite + TypeScript + Element Plus + ECharts |
+| 后端 API | Node.js + TypeScript + Express + sequelize-typescript |
+| 数据库 | MySQL 8（utf8mb4） |
+| 认证 | JWT（管理员 / 玩家双体系） |
+| 部署 | Docker Compose；前端可发布为静态站点 |
 
 ---
 
-## 馃摝 鐩綍缁撴瀯
+## 📦 目录结构
 
 ```
 lele-esports/
-鈹溾攢鈹€ frontend/      # 绠＄悊鍚庡彴锛堜細鍛?璁㈠崟/鍏呭€?鎵撴墜/鎶ヨ〃/浣ｉ噾/璇勪环锛?鈹溾攢鈹€ storefront/    # 鐜╁绔墠鍙帮紙闄帺骞垮満/涓嬪崟/璁㈠崟/璇勪环/涓汉涓績锛?鈹溾攢鈹€ backend/       # Express + TS 鍚庣 API
-鈹?  鈹溾攢鈹€ src/routes/storefront.ts   # 鐜╁搴楅摵鎺ュ彛
-鈹?  鈹斺攢鈹€ src/models/Review.ts       # 璇勪环妯″瀷
-鈹溾攢鈹€ payboard.sql   # 鏁版嵁搴撹〃缁撴瀯
-鈹溾攢鈹€ docker-compose.yml
-鈹斺攢鈹€ docs/          # 璇存槑鏂囨。
+├── frontend/      # 管理后台（会员/订单/充值/打手/报表/佣金/评价）
+├── storefront/    # 玩家端前台（陪玩广场/下单/订单/评价/个人中心）
+├── backend/       # Express + TS 后端 API
+│   ├── src/routes/storefront.ts   # 玩家店铺接口
+│   └── src/models/Review.ts       # 评价模型
+├── payboard.sql   # 数据库表结构
+├── docker-compose.yml
+└── docs/          # 说明文档
 ```
 
-## 鉁?宸插疄鐜板姛鑳?
-### 鐜╁绔紙storefront锛宍http://localhost:3002`锛?- 鎵嬫満鍙?+ 瀵嗙爜**娉ㄥ唽 / 鐧诲綍**锛圝WT锛?- **闄帺骞垮満**锛氭寜绫诲瀷绛涢€夈€佸叧閿瘝鎼滅储銆佹煡鐪嬩环鏍?绾у埆/鏍囩
-- **闄帺璇︽儏**锛氳瘎鍒嗘槦绾с€佽瘎浠峰垪琛ㄣ€佺珛鍗充笅鍗?- **涓嬪崟**锛氶€夋嫨鏈嶅姟鏃堕暱 鈫?妯℃嫙鏀粯 鈫?鐢熸垚璁㈠崟
-- **鎴戠殑璁㈠崟**锛氳鍗曠姸鎬佽窡韪紙寰呬笂閽?鏈嶅姟涓?宸插畬鎴?宸插彇娑堬級銆佸彇娑堛€?*璁㈠崟璇勪环**
-- **涓汉涓績**锛氫綑棰濄€佺疮璁″厖鍊?娑堣垂銆佸熀鏈俊鎭?
-### 绠＄悊鍚庡彴锛坒rontend锛宍http://localhost:3001`锛?- 浼氬憳绠＄悊銆佸厖鍊肩鐞嗐€佽鍗曠鐞嗭紙涓婇挓/涓嬮挓锛夈€佹墦鎵嬬鐞嗐€佹墦鎵嬪璐?- 浣ｉ噾瑙勫垯銆佹暟鎹姤琛紙浠婃棩姒傝/瓒嬪娍/鎺掕姒滐級銆佺郴缁熺鐞嗭紙鐢ㄦ埛/瑙掕壊锛?- 鏁版嵁鍙鍖栵紙ECharts锛?
-### 鍚庣 API锛坄http://localhost:10000/api/v1`锛?- 绠＄悊鍛樿璇?`/auth`銆乣/users`銆乣/roles`
-- 涓氬姟 `/members`銆乣/orders`銆乣/recharges`銆乣/workers`銆乣/reports`銆乣/commission-rules`
-- 鐜╁搴楅摵 `/store`锛氭敞鍐?鐧诲綍銆侀櫔鐜╁垪琛?璇︽儏銆佷笅鍗曘€佹垜鐨勮鍗曘€佽瘎浠?
+## ✨ 已实现功能
+
+### 玩家端（storefront，`http://localhost:3002`）
+- 手机号 + 密码**注册 / 登录**（JWT）
+- **陪玩广场**：按类型筛选、关键词搜索、查看价格/级别/标签
+- **陪玩详情**：评分星级、评价列表、立即下单
+- **下单**：选择服务时长 → 模拟支付 → 生成订单
+- **我的订单**：订单状态跟踪（待上钟/服务中/已完成/已取消）、取消、**订单评价**
+- **个人中心**：余额、累计充值/消费、基本信息
+
+### 管理后台（frontend，`http://localhost:3001`）
+- 会员管理、充值管理、订单管理（上钟/下钟）、打手管理、打手对账
+- 佣金规则、数据报表（今日概览/趋势/排行榜）、系统管理（用户/角色）
+- 数据可视化（ECharts）
+
+### 后端 API（`http://localhost:10000/api/v1`）
+- 管理员认证 `/auth`、`/users`、`/roles`
+- 业务 `/members`、`/orders`、`/recharges`、`/workers`、`/reports`、`/commission-rules`
+- 玩家店铺 `/store`：注册/登录、陪玩列表/详情、下单、我的订单、评价
+
 ---
 
-## 馃殌 蹇€熷紑濮?
-### 鐜瑕佹眰
+## 🚀 快速开始
+
+### 环境要求
 - Node.js 18+
 - MySQL 8.0+
 - pnpm 8+
 
-### 1. 鍒濆鍖栨暟鎹簱
+### 1. 初始化数据库
 ```bash
 mysql -uroot -p -e "CREATE DATABASE payboard CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
 mysql -uroot -p payboard < payboard.sql
 ```
 
-### 2. 鍚姩鍚庣
+### 2. 启动后端
 ```bash
 cd backend
-cp .env.example .env      # 淇敼 DB_HOST/DB_PASSWORD 绛?pnpm install
+cp .env.example .env      # 修改 DB_HOST/DB_PASSWORD 等
+pnpm install
 pnpm run build
 node dist/app.js          # http://localhost:10000
 ```
-棣栨鍚姩浼氳嚜鍔ㄥ缓琛ㄥ苟鍒涘缓榛樿绠＄悊鍛橈細`admin / admin123`锛堝彲鍦?`.env` 鎴栫櫥褰曞悗淇敼锛夈€?
-### 3. 鍚姩绠＄悊鍚庡彴
+首次启动会自动建表并创建默认管理员：`admin / admin123`（可在 `.env` 或登录后修改）。
+
+### 3. 启动管理后台
 ```bash
 cd frontend
 pnpm install
 node node_modules/vite/bin/vite.js   # http://localhost:3001
 ```
-鐧诲綍锛歚admin` / `123456`
+登录：`admin` / `123456`
 
-### 4. 鍚姩鐜╁绔墠鍙?```bash
+### 4. 启动玩家端前台
+```bash
 cd storefront
 pnpm install
 node node_modules/vite/bin/vite.js   # http://localhost:3002
 ```
 
-> 鎻愮ず锛氬悗鍙伴粯璁ゅ瘑鐮?`123456` 涓庣櫥褰曡〃鍗曚竴鑷达紱濡傚師鍏堢敤 `sync-database` 鍒濆鍖栧垯涓?`admin123`銆?
+> 提示：后台默认密码 `123456` 与登录表单一致；如原先用 `sync-database` 初始化则为 `admin123`。
+
 ---
 
-## 馃惓 Docker 涓€閿儴缃?
-浠撳簱鑷甫 `docker-compose.yml`锛屼竴閿惎鍔?MySQL + 鍚庣 + 鍓嶇 + phpMyAdmin锛?```bash
+## 🐳 Docker 一键部署
+
+仓库自带 `docker-compose.yml`，一键启动 MySQL + 后端 + 前端 + phpMyAdmin：
+```bash
 docker compose up -d --build
 ```
 
 ---
 
-## 馃攼 璐﹀彿璇存槑
-- **绠＄悊鍚庡彴**锛歚admin` / `123456`锛堥粯璁わ紝鐢熶骇鐜璇蜂慨鏀癸級
-- **鐜╁娉ㄥ唽**锛氬墠鍙拌嚜琛屾敞鍐?
-## 馃搫 License
+## 🔐 账号说明
+- **管理后台**：`admin` / `123456`（默认，生产环境请修改）
+- **玩家注册**：前台自行注册
+
+## 📄 License
 [MIT](./LICENSE)
 
-## 馃檹 鑷磋阿
-鏈」鐩熀浜?[Guyungy/Kuangniao](https://github.com/Guyungy/Kuangniao)锛堝師涓婃父涓?Vue3 鍚庡彴妯℃澘鐢熸€侊級浜屾寮€鍙戞敼杩涳紝鎰熻阿涓婃父寮€婧愩€?
+## 🙏 致谢
+本项目基于 [Guyungy/Kuangniao](https://github.com/Guyungy/Kuangniao)（原上游为 Vue3 后台模板生态）二次开发改进，感谢上游开源。
