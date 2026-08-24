@@ -23,6 +23,9 @@ const sequelize = new Sequelize({
   port: Number(process.env.DB_PORT || 3306),
   dialect: 'mysql',
   timezone: '+08:00',
+  dialectOptions: {
+    ...(process.env.DB_SSL === 'true' ? { ssl: { rejectUnauthorized: false } } : {})
+  },
   logging: process.env.NODE_ENV === 'development' ? console.log : false,
   pool: {
     max: 20,
