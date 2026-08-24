@@ -1,0 +1,76 @@
+version: "3.8"
+services:
+  mysql:
+    image: mysql:8.0.43
+    container_name: payboard-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: payboard
+      MYSQL_USER: app
+      MYSQL_PASSWORD: app123
+    ports:
+      - "3307:3306"
+    command: >
+      --character-set-server=utf8mb4
+      --collation-server=utf8mb4_unicode_ci
+    volumes:
+      - ./mysql-data:/var/lib/mysql
+      - ./payboard.sql:/docker-entrypoint-initdb.d/001-payboard.sql:ro
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-proot"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+    restart: unless-stopped
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: payboard-backend
+    environment:
+      NODE_ENV: production
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_NAME: payboard
+      DB_USER: root
+      DB_PASSWORD: root
+      PORT: 10000
+      JWT_SECRET: change-this-secret
+      REFRESH_SECRET: change-this-refresh-secret
+    depends_on:
+      mysql:
+        condition: service_healthy
+    ports:
+      - "10000:10000"
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        VITE_APP_BASE_API: /api/v1
+    container_name: payboard-frontend
+    depends_on:
+      - backend
+    ports:
+      - "8081:80"
+    restart: unless-stopped
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    container_name: payboard-pma
+    environment:
+      PMA_HOST: mysql
+      PMA_USER: root
+      PMA_PASSWORD: root
+    depends_on:
+      - mysql
+    ports:
+      - "8080:80"
+    restart: unless-stopped
+
+networks:
+  default:
+    name: payboard-net
